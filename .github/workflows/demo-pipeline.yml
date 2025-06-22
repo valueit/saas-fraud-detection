@@ -1,0 +1,95 @@
+name: Demo Microservices Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚧 Build Project
+        run: |
+          echo "Build in progress..."
+          sleep 5
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 🧪 Run Unit Tests
+        run: |
+          echo "Running tests..."
+          sleep 4
+
+  quality:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: 🔍 SonarQube Quality Check
+        run: |
+          echo "Quality check..."
+          sleep 6
+
+  security:
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - name: 🛡️ Security Scan
+        run: |
+          echo "Running security check..."
+          sleep 5
+
+  package:
+    runs-on: ubuntu-latest
+    needs: security
+    steps:
+      - name: 📦 Docker Packaging
+        run: |
+          echo "Packaging docker image..."
+          sleep 4
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: package
+    steps:
+      - name: 🚀 Deploy to staging
+        run: |
+          echo "Deploying to staging..."
+          sleep 5
+
+  populate-db:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: 📊 Populate Data
+        run: |
+          echo "Injecting demo data..."
+          sleep 4
+
+  perf-test:
+    runs-on: ubuntu-latest
+    needs: populate-db
+    steps:
+      - name: 📈 Run Performance Tests
+        run: |
+          echo "Running perf tests..."
+          sleep 5
+
+  rollback:
+    runs-on: ubuntu-latest
+    needs: perf-test
+    steps:
+      - name: ♻️ Check Rollback Strategy
+        run: |
+          echo "Checking rollback..."
+          sleep 3
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: rollback
+    steps:
+      - name: 📢 Notify Team
+        run: |
+          echo "Sending notifications..."
+          sleep 2
