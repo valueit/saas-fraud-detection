@@ -1,4 +1,4 @@
-name: Demo Microservices Pipeline
+name: Fraud Detection Pipeline
 
 on:
   push:
